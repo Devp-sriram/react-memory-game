@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme{
+  --color-dark : #082f49;
+  --color-light : #f0f9ff;
+  --color-accent : #fde68a;
+  --color-btn-disabled : #a8a19e;
+}
+
+.debug {
+  border: solid black 2px;
+}
