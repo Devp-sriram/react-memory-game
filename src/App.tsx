@@ -1,5 +1,7 @@
 import './App.css'
 import { useState } from 'react'
+import Form from '../components/Form.tsx'
+import MemoryCard from '../components/MemoryCard.tsx'
 
 
 export default function App() {
@@ -7,8 +9,7 @@ export default function App() {
 const [isGameOn,setIsGameOn] = useState(false)
 
 
-  function startGame(e : any){
-    e.preventDefault();
+  function startGame(){
     setIsGameOn(true)
   }
 
@@ -19,24 +20,15 @@ const [isGameOn,setIsGameOn] = useState(false)
   return (
     <>
     <main className ='bg-dark p-4 flex justify-center items-start h-screen w-screen'>
-        <div className='flex flex-col justify-center items-center'>
+        <div className=' w-1/3 flex flex-col justify-center items-center'>
 
             <h1 className='text-3xl p-2 bold text-light'>Memory</h1>
-            <div className='p-2 gap-2'>
-            {!isGameOn && <button 
-                      onClick = {(e)=>startGame(e)}
-                      className = 'bg-light m-2 p-2 rounded-full text-lg text-dark'
-                      >
-                      game on</button>}
-            {isGameOn && <button 
-                      onClick={turnCard}
-                      className = 'bg-light m-2 p-2 rounded-full text-lg text-dark'
-                      >
-                      turn card</button>}
+            <div className='w-full flex h-1/2 text-3xl'>
+            {!isGameOn && <Form handleSubmit = {startGame}/>}
+            {isGameOn && <MemoryCard handleClick={turnCard}/>}
             </div>
         </div>
     </main> 
     </>
   )
 }
-
