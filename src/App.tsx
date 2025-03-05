@@ -1,17 +1,45 @@
 import './App.css'
-import { useState } from 'react'
+import {useEffect , useState } from 'react'
 import Form from '../components/Form.tsx'
 import MemoryCard from '../components/MemoryCard.tsx'
 
 
 export default function App() {
 
+
+{/*useEffect(()=>{
+    const result = fetchData()
+    console.log(result)
+},[])
+
+async function fetchData(url : string ){
+
+     const response = await fetch(url)
+  
+      if(!response.ok){
+          console.log('fetch failed');
+      }
+
+    const result = await response.json();
+
+    return result
+} */}
+
+
+
 const [isGameOn,setIsGameOn] = useState(false)
 
 
-  function startGame(){
-    setIsGameOn(true)
-  }
+async function startGame(){
+     const response = await fetch('https://api.watchmode.com/v1/releases/?apiKey=NCmmmV6njcyc6tI4mPQhS0AAt6Eei0Q5A7MXDBQl')  
+      if(!response.ok){
+          console.log('fetch failed');
+      }
+
+    const result = await response.json();
+
+    console.log(result)  
+}
 
   function turnCard(){
     console.log("Memo card cliked")
