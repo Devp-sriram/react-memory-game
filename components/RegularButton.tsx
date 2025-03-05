@@ -1,7 +1,7 @@
 import {PropsWithChildren} from 'react'
 
 export interface ComponentProp{
-  handleClick : ()=> void
+handleClick : ()=> void
 }
 
 export default function RegularButton({ children ,  handleClick} : PropsWithChildren<ComponentProp>) {

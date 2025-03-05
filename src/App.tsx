@@ -1,17 +1,18 @@
 import './App.css'
-import {useEffect , useState } from 'react'
+import {FormEventHandler, useEffect , useState } from 'react'
+// import dotenv from 'dotenv'
 import Form from '../components/Form.tsx'
 import MemoryCard from '../components/MemoryCard.tsx'
 
+// dotenv.config();
 
 export default function App() {
 
 
-{/*useEffect(()=>{
-    const result = fetchData()
-    console.log(result)
+useEffect(()=>{
+    // startGame()
 },[])
-
+ {/*
 async function fetchData(url : string ){
 
      const response = await fetch(url)
@@ -29,16 +30,17 @@ async function fetchData(url : string ){
 
 const [isGameOn,setIsGameOn] = useState(false)
 
-
-async function startGame(){
-     const response = await fetch('https://api.watchmode.com/v1/releases/?apiKey=NCmmmV6njcyc6tI4mPQhS0AAt6Eei0Q5A7MXDBQl')  
+async function startGame(e : HTMLFormElement){
+    e.preventDefault();
+     const response = await fetch(`https://emoji-api.com/emojis?access_key=${import.meta.env.VITE_EMOJI_API}`)  
       if(!response.ok){
           console.log('fetch failed');
       }
 
     const result = await response.json();
 
-    console.log(result)  
+    console.log(result[0].character)
+    setIsGameOn(true)
 }
 
   function turnCard(){
