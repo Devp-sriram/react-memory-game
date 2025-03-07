@@ -41,9 +41,16 @@ export default function Memory() {
   }
 
   function cheackMatch(){
-    const [firstId , secondId] :Key[] = flipped
+    const [firstId , secondId] : Key[]= flipped
     if(cards[firstId].num === cards[secondId].num){
       setSolved([...solved,firstId,secondId])
+      setflipped([]);
+      setDisabled(false);
+    }else{
+      setInterval(()=>{
+        setflipped([]);
+        setDisabled(false);
+      },1000)
     }
   }
 
@@ -99,7 +106,7 @@ export default function Memory() {
                                   text-xl font-bold rounded-lg cursor-pointer 
                                   transition-all duration-300 
                                   ${isFlipped(card.id)? "bg-blue-500 text-white":"bg-gray-300 text-gray-400"}`}>
-                  {isFlipped(card.id) ? card.num :"?"}
+                  { isFlipped(card.id) ? card.num :"?"}
                 </div>
       })}
       </div>
