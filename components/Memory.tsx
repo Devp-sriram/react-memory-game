@@ -42,7 +42,10 @@ export default function Memory() {
 
   function cheackMatch(secondId : Key){
     const [firstId] : Key[]= flipped
-    if(cards[firstId].num === cards[secondId].num){
+
+    const firstIndex = Number(firstId);
+    const secondindex = Number(secondId);
+    if(cards[firstIndex].num === cards[secondindex].num){
       setSolved([...solved,firstId,secondId])
       setflipped([]);
       setDisabled(false);
