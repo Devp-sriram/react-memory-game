@@ -40,14 +40,14 @@ export default function Memory() {
     setWon(false)
   }
 
-  function cheackMatch(){
-    const [firstId , secondId] : Key[]= flipped
+  function cheackMatch(secondId : Key){
+    const [firstId] : Key[]= flipped
     if(cards[firstId].num === cards[secondId].num){
       setSolved([...solved,firstId,secondId])
       setflipped([]);
       setDisabled(false);
     }else{
-      setInterval(()=>{
+      setTimeout(()=>{
         setflipped([]);
         setDisabled(false);
       },1000)
@@ -57,24 +57,37 @@ export default function Memory() {
   function handleClick(id : Key){
     if(disabled || won) return 
 
-    if(flipped.length <= 1){
+    if(flipped.length === 0){
+      setflipped([id]  as SetStateAction<typeof flipped>)
+      return;
+    }
+
+    if(flipped.length === 1){
+      setDisabled(true);
       if(id !== flipped[0]){
         setflipped([...flipped,id]  as SetStateAction<typeof flipped>)
         // match logic
-        cheackMatch()
+        cheackMatch(id)
       }else{
         setflipped([]);
         setDisabled(false);
       }
-      return 
     }
-    
   }
 
   function isFlipped(id : Key): Boolean{
-      return (flipped as Key[]).includes(id)
+      return (flipped as Key[]).includes(id) || (solved as Key[]).includes(id) 
   }
 
+  function isSolved(id:Key): Boolean{
+    return (solved as Key[]).includes(id) 
+  }
+  
+  useEffect(()=>{
+      if(solved.length === cards.length && cards.length > 0){
+           setWon(true);  
+      }
+  },[solved , cards])
   
   return (
     <div className=" flex flex-col items-center justify-center min-h-screen bg-grey-100 p-4">
@@ -105,15 +118,31 @@ export default function Memory() {
                       className={`aspect-square flex justify-center items-center 
                                   text-xl font-bold rounded-lg cursor-pointer 
                                   transition-all duration-300 
-                                  ${isFlipped(card.id)? "bg-blue-500 text-white":"bg-gray-300 text-gray-400"}`}>
-                  { isFlipped(card.id) ? card.num :"?"}
+                                  ${isFlipped(card.id)
+                                      ? isSolved(card.id)? 
+                                        "bg-green-500 text-white":"bg-blue-500 text-white"
+                                      :"bg-gray-300 text-gray-400"}`}>
+
+                  {isFlipped(card.id) ? card.num :"?"}
                 </div>
       })}
       </div>
 
       {/*result*/}
+      {
+        won &&(
+          <div className=" mt-4 text-4xl font-bold text-green-600 animate-bounce"   >
+              You won!
+          </div>
+        )
+      }
       {/*reset*/}
-
+          <button 
+            className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
+            onClick={initGame}
+          >
+            { won ?'Play again':'reset'}
+          </button>
     </div>
 
   )
